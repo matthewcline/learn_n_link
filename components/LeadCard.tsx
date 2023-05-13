@@ -6,7 +6,7 @@ interface LeadCardProps {
 export default function LeadCard({ lead }: LeadCardProps) {
   return (
     <div
-      className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
+      className="bg-white rounded-xl max-w-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
       onClick={() => {
         // navigator.clipboard.writeText(generatedLead);
         // toast("Bio copied to clipboard", {

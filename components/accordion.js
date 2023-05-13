@@ -9,16 +9,17 @@ export default function Accordion(props) {
 
   return (
     <div
-      style={{
-        width: "100%",
-        marginBottom: "15px",
-        lineHeight: "15px"
-      }}
+      // style={{
+      //   width: "100%",
+      //   marginBottom: "15px",
+      //   lineHeight: "15px"
+      // }}
+      className="flex flex-col flex-1 justify-center items-center"
     >
       <button
         style={{
-          width: "100%",
-          position: "relative",
+          // width: "100%",
+          // position: "relative",
           textAlign: "left",
           padding: "4px",
           border: "none",

@@ -168,7 +168,7 @@ const Home: NextPage = () => {
           toastOptions={{ duration: 2000 }}
         />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-        <div className="space-y-10 my-10">
+        <div className="space-y-10 my-10 w-full">
           {generatedLeads && (
             <>
               <div>
@@ -179,7 +179,7 @@ const Home: NextPage = () => {
                   Your generated leads
                 </h2>
               </div>
-              <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
+              <div className="space-y-8 flex flex-col items-center justify-center mx-auto">
                 {generatedLeads
                   .map((generatedLead) => (
                     <Accordion key={generatedLead.lastName} title={<LeadCard key={generatedLead.lastName} lead={generatedLead} />} content={<Lead key={generatedLead.lastName} lead={generatedLead} />} />
