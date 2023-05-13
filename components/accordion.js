@@ -29,7 +29,7 @@ export default function Accordion(props) {
         onClick={toggle}
         type="button"
       >
-        <p>{props.title}</p>
+      {props.title}
       </button>
       {/* <div
         style={{ display: isShowing ? "block" : "none", padding: "5px" }}
