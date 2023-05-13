@@ -11,30 +11,33 @@ import LoadingDots from "../components/LoadingDots";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
-  const [bio, setBio] = useState("");
-  const [vibe, setVibe] = useState<VibeType>("Professional");
-  const [generatedBios, setGeneratedBios] = useState<String>("");
+  const [profileUrl, setProfileUrl] = useState("");
+  const [experience, setExperience] = useState("");
+  const [aspiration, setAspiration] = useState("");
+  // const [vibe, setVibe] = useState<VibeType>("Professional");
+  const [generatedLeads, setGeneratedLeads] = useState<String>("");
 
-  const bioRef = useRef<null | HTMLDivElement>(null);
+  const leadRef = useRef<null | HTMLDivElement>(null);
 
-  const scrollToBios = () => {
-    if (bioRef.current !== null) {
-      bioRef.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToLeads = () => {
+    if (leadRef.current !== null) {
+      leadRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const prompt = `Generate 2 ${vibe} twitter biographies with no hashtags and clearly labeled "1." and "2.". ${
-    vibe === "Funny"
-      ? "Make sure there is a joke in there and it's a little ridiculous."
-      : null
-  }
-      Make sure each generated biography is less than 160 characters, has short sentences that are found in Twitter bios, and base them on this context: ${bio}${
-    bio.slice(-1) === "." ? "" : "."
-  }`;
+  // const prompt = `Generate 2 ${vibe} twitter biographies with no hashtags and clearly labeled "1." and "2.". ${
+  //   vibe === "Funny"
+  //     ? "Make sure there is a joke in there and it's a little ridiculous."
+  //     : null
+  // }
+  //     Make sure each generated biography is less than 160 characters, has short sentences that are found in Twitter bios, and base them on this context: ${profileUrl}${
+  //   profileUrl.slice(-1) === "." ? "" : "."
+  // }`;
+  const prompt = "";
 
-  const generateBio = async (e: any) => {
+  const generateLead = async (e: any) => {
     e.preventDefault();
-    setGeneratedBios("");
+    setGeneratedLeads("");
     setLoading(true);
     const response = await fetch("/api/generate", {
       method: "POST",
@@ -64,9 +67,9 @@ const Home: NextPage = () => {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunkValue = decoder.decode(value);
-      setGeneratedBios((prev) => prev + chunkValue);
+      setGeneratedLeads((prev) => prev + chunkValue);
     }
-    scrollToBios();
+    scrollToLeads();
     setLoading(false);
   };
 
@@ -90,8 +93,8 @@ const Home: NextPage = () => {
             </p>
           </div>
           <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            value={profileUrl}
+            onChange={(e) => setProfileUrl(e.target.value)}
             rows={1}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={
@@ -105,8 +108,8 @@ const Home: NextPage = () => {
             </p>
           </div>
           <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
             rows={4}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={
@@ -120,8 +123,8 @@ const Home: NextPage = () => {
             </p>
           </div>
           <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            value={aspiration}
+            onChange={(e) => setAspiration(e.target.value)}
             rows={4}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={
@@ -139,7 +142,7 @@ const Home: NextPage = () => {
           {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-              onClick={(e) => generateBio(e)}
+              onClick={(e) => generateLead(e)}
             >
               Generate your leads &rarr;
             </button>
@@ -160,33 +163,33 @@ const Home: NextPage = () => {
         />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
-          {generatedBios && (
+          {generatedLeads && (
             <>
               <div>
                 <h2
                   className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
-                  ref={bioRef}
+                  ref={leadRef}
                 >
-                  Your generated bios
+                  Your generated leads
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                {generatedBios
-                  .substring(generatedBios.indexOf("1") + 3)
+                {generatedLeads
+                  .substring(generatedLeads.indexOf("1") + 3)
                   .split("2.")
-                  .map((generatedBio) => {
+                  .map((generatedLead) => {
                     return (
                       <div
                         className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
                         onClick={() => {
-                          navigator.clipboard.writeText(generatedBio);
+                          navigator.clipboard.writeText(generatedLead);
                           toast("Bio copied to clipboard", {
                             icon: "✂️",
                           });
                         }}
-                        key={generatedBio}
+                        key={generatedLead}
                       >
-                        <p>{generatedBio}</p>
+                        <p>{generatedLead}</p>
                       </div>
                     );
                   })}
