@@ -10,6 +10,8 @@ import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import Lead from "../components/Lead";
 import leads from "../lib/sampleLeads.json";
+import Accordion from "../components/accordion";
+
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -39,7 +41,7 @@ const Home: NextPage = () => {
 
   const generateLead = async (e: any) => {
     e.preventDefault();
-    setGeneratedLeads("");
+    setGeneratedLeads([]);
     setLoading(true);
     const response = await fetch("/api/generate", {
       method: "POST",
@@ -178,7 +180,7 @@ const Home: NextPage = () => {
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                 {generatedLeads
                   .map((generatedLead) => (
-                    <Lead lead={generatedLead} />
+                    <Accordion key={generatedLead.lastName} title={<Lead key={generatedLead.lastName} lead={generatedLead} />} content={<Lead key={generatedLead.lastName} lead={generatedLead} />} />
                   ))
                 }
               </div>

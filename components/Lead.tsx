@@ -1,3 +1,4 @@
+
 interface LeadProps {
   lead: any;
 }
@@ -15,8 +16,8 @@ export default function Lead({ lead }: LeadProps) {
       key={lead.lastName}
     >
       <p>{lead.firstName} {lead.lastName}</p>
-      <p>{lead.summary}</p>
-      <p>{lead.locationName}</p>
+      <p className="mt-2 text-slate-600">{lead.locationName}</p>
+      <p className="mt-4">{lead.summary}</p>
     </div>
   );
 }
