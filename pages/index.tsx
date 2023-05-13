@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const [questionSet, setQuestionSet] = useState("GenerateLeads");
+  const [jobLink, setJobLink] = useState("");
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
@@ -145,22 +146,54 @@ const Home: NextPage = () => {
             }
           />
           <div className="flex items-center space-x-3">
-            <h1 className="text-2xl">🤝</h1>
-            <p className="text-left font-medium">
-              {questionSet === "GenerateLeads"
-                ? questionSet1.connectQuestion
-                : questionSet2.connectQuestion}
-            </p>
+          <h1 className="text-2xl">👩‍💻</h1>
+          <p className="text-left font-medium">
+            {questionSet === "GenerateLeads"
+              ? questionSet1.bioQuestion
+              : questionSet2.bioQuestion}
+          </p>
+        </div>
+        <textarea
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          rows={4}
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+          placeholder={
+            "e.g. Senior Developer Advocate @vercel. Tweeting about web development, AI, and React / Next.js. Writing nutlope.substack.com."
+          }
+        />
+        {questionSet === "WriteCover" && ( // Add this conditional rendering block
+          <div className="flex items-center space-x-3">
+            <h1 className="text-2xl">🔗</h1>
+            <p className="text-left font-medium">Sample job link</p>
           </div>
+        )}
+        {questionSet === "WriteCover" && ( // Add this conditional rendering block
           <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            rows={4}
+            value={jobLink}
+            onChange={(e) => setJobLink(e.target.value)}
+            rows={1}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
-            placeholder={
-              "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
-            }
+            placeholder={"https://www.example.com/job/sample-job"}
           />
+        )}
+        <div className="flex items-center space-x-3">
+          <h1 className="text-2xl">🤝</h1>
+          <p className="text-left font-medium">
+            {questionSet === "GenerateLeads"
+              ? questionSet1.connectQuestion
+              : questionSet2.connectQuestion}
+          </p>
+        </div>
+        <textarea
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          rows={4}
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+          placeholder={
+            "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
+          }
+        />
           {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
