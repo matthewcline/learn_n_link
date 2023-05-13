@@ -15,7 +15,10 @@ const Home: NextPage = () => {
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const [questionSet, setQuestionSet] = useState("GenerateLeads");
-  const [jobLink, setJobLink] = useState("");
+  const [linkedInLink, setLinkedInLink] = useState("");
+  const [JobLink, setJobLink] = useState("");
+  const [bioHighlight, setBioHighlight] = useState("");
+  const [connectWith, setConnectWith] = useState("");
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
@@ -89,7 +92,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/handshake.png" />
       </Head>
 
-      <Header />
+    <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Find the perfect intro to the people and jobs you want to connect with!
@@ -102,7 +105,13 @@ const Home: NextPage = () => {
                   ? "bg-black text-white"
                   : "bg-gray-300 text-gray-700"
               }`}
-              onClick={() => setQuestionSet("GenerateLeads")}
+              onClick={() => {
+                setQuestionSet("GenerateLeads");
+                setBio("");
+                setBioHighlight("");
+                setLinkedInLink("");
+                setJobLink("");
+              }}
             >
               Generate Leads
             </button>
@@ -112,7 +121,13 @@ const Home: NextPage = () => {
                   ? "bg-black text-white"
                   : "bg-gray-300 text-gray-700"
               }`}
-              onClick={() => setQuestionSet("WriteCover")}
+              onClick={() => {
+                setQuestionSet("WriteCover");
+                setBio("");
+                setBioHighlight("");
+                setLinkedInLink("");
+                setJobLink("");
+              }}
             >
               Write Cover Letters
             </button>
@@ -122,8 +137,8 @@ const Home: NextPage = () => {
             <p className="text-left font-medium">Connect your LinkedIn</p>
           </div>
           <textarea
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            value={linkedInLink}
+            onChange={(e) => setLinkedInLink(e.target.value)}
             rows={1}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={"https://www.linkedin.com/in/yourname"}
@@ -145,117 +160,100 @@ const Home: NextPage = () => {
               "e.g. Senior Developer Advocate @vercel. Tweeting about web development, AI, and React / Next.js. Writing nutlope.substack.com."
             }
           />
-          <div className="flex items-center space-x-3">
-          <h1 className="text-2xl">👩‍💻</h1>
-          <p className="text-left font-medium">
-            {questionSet === "GenerateLeads"
-              ? questionSet1.bioQuestion
-              : questionSet2.bioQuestion}
-          </p>
-        </div>
-        <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          rows={4}
-          className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
-          placeholder={
-            "e.g. Senior Developer Advocate @vercel. Tweeting about web development, AI, and React / Next.js. Writing nutlope.substack.com."
-          }
-        />
-        {questionSet === "WriteCover" && ( // Add this conditional rendering block
+          {questionSet === "WriteCover" && ( // Add this conditional rendering block
           <div className="flex items-center space-x-3">
             <h1 className="text-2xl">🔗</h1>
             <p className="text-left font-medium">Sample job link</p>
           </div>
-        )}
-        {questionSet === "WriteCover" && ( // Add this conditional rendering block
+          )}
+          {questionSet === "WriteCover" && ( // Add this conditional rendering block
           <textarea
-            value={jobLink}
+            value={JobLink}
             onChange={(e) => setJobLink(e.target.value)}
             rows={1}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
             placeholder={"https://www.example.com/job/sample-job"}
           />
-        )}
-        <div className="flex items-center space-x-3">
+          )}
+          <div className="flex items-center space-x-3">
           <h1 className="text-2xl">🤝</h1>
           <p className="text-left font-medium">
             {questionSet === "GenerateLeads"
               ? questionSet1.connectQuestion
-              : questionSet2.connectQuestion}
-          </p>
-        </div>
-        <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          rows={4}
-          className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
-          placeholder={
-            "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
-          }
-        />
-          {!loading && (
-            <button
-              className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-              onClick={(e) => generateBio(e)}
-            >
-              Generate your leads →
-            </button>
-          )}
-          {loading && (
-            <button
-              className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-              disabled
-            >
-              <LoadingDots color="white" style="large" />
-            </button>
-          )}
-        </div>
-        <Toaster
-                position="top-center"
-                reverseOrder={false}
-                toastOptions={{ duration: 2000 }}
-              />
-              <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-              <div className="space-y-10 my-10">
-                {generatedBios && (
-                  <>
-                    <div>
-                      <h2
-                        className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
-                        ref={bioRef}
-                      >
-                        Your generated bios
-                      </h2>
-                    </div>
-                    <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                      {generatedBios
-                        .substring(generatedBios.indexOf("1") + 3)
-                        .split("2.")
-                        .map((generatedBio) => {
-                          return (
-                            <div
-                              className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                              onClick={() => {
-                                navigator.clipboard.writeText(generatedBio);
-                                toast("Bio copied to clipboard", {
-                                  icon: "✂️",
-                                });
-                              }}
-                              key={generatedBio}
-                            >
-                              <p>{generatedBio}</p>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </>
-                )}
-              </div>
-            </main>
-            {/* <Footer /> */}
-          </div>
-        );
-      };
-      
-      export default Home;
+              :questionSet2.connectQuestion}
+            </p>
+            </div>
+            <textarea
+            value={bioHighlight}
+            onChange={(e) => setBioHighlight(e.target.value)}
+            rows={4}
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+            placeholder={
+              "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
+            }
+            />
+            {!loading && (
+              <button
+                className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
+                onClick={(e) => generateBio(e)}
+              >
+                Generate your leads →
+              </button>
+            )}
+            {loading && (
+              <button
+                className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
+                disabled
+              >
+                <LoadingDots color="white" style="large" />
+              </button>
+            )}
+            </div>
+            <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                  toastOptions={{ duration: 2000 }}
+                />
+                <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
+                <div className="space-y-10 my-10">
+                  {generatedBios && (
+                    <>
+                      <div>
+                        <h2
+                          className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
+                          ref={bioRef}
+                        >
+                          Your generated bios
+                        </h2>
+                      </div>
+                      <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
+                        {generatedBios
+                          .substring(generatedBios.indexOf("1") + 3)
+                          .split("2.")
+                          .map((generatedBio) => {
+                            return (
+                              <div
+                                className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(generatedBio);
+                                  toast("Bio copied to clipboard", {
+                                    icon: "✂️",
+                                  });
+                                }}
+                                key={generatedBio}
+                              >
+                                <p>{generatedBio}</p>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </main>
+              {/* <Footer /> */}
+            </div>
+            );
+            };
+
+  export default Home;
