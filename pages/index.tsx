@@ -67,12 +67,13 @@ const Home: NextPage = () => {
     const decoder = new TextDecoder();
     let done = false;
 
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setGeneratedLeads((prev) => prev + chunkValue);
-    }
+    // while (!done) {
+    //   const { value, done: doneReading } = await reader.read();
+    //   done = doneReading;
+    //   const chunkValue = decoder.decode(value);
+    //   setGeneratedLeads((prev) => prev + chunkValue);
+    // }
+    setGeneratedLeads(leads.leads);
     scrollToLeads();
     setLoading(false);
   };
