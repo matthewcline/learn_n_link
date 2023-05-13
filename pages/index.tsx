@@ -84,19 +84,24 @@ const Home: NextPage = () => {
         </h1>
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
-            <Image
-              src="/1-black.png"
-              width={30}
-              height={30}
-              alt="1 icon"
-              className="mb-5 sm:mb-0"
-            />
+            <h1 className="text-2xl">🔁</h1>
             <p className="text-left font-medium">
-              Copy your current bio{" "}
-              <span className="text-slate-500">
-                (or write a few sentences about yourself)
-              </span>
-              .
+              Connect your LinkedIn
+            </p>
+          </div>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            rows={1}
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+            placeholder={
+              "https://www.linkedin.com/in/yourname"
+            }
+          />
+          <div className="flex items-center space-x-3">
+            <h1 className="text-2xl">👩‍💻</h1>
+            <p className="text-left font-medium">
+              What experience do you want to highlight?
             </p>
           </div>
           <textarea
@@ -108,20 +113,35 @@ const Home: NextPage = () => {
               "e.g. Senior Developer Advocate @vercel. Tweeting about web development, AI, and React / Next.js. Writing nutlope.substack.com."
             }
           />
-          <div className="flex mb-5 items-center space-x-3">
+          <div className="flex items-center space-x-3">
+            <h1 className="text-2xl">🤝</h1>
+            <p className="text-left font-medium">
+              Who are you looking to connect with?
+            </p>
+          </div>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            rows={4}
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+            placeholder={
+              "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
+            }
+          />
+          {/* <div className="flex mb-5 items-center space-x-3">
             <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
             <p className="text-left font-medium">Select your vibe.</p>
           </div>
           <div className="block">
             <DropDown vibe={vibe} setVibe={(newVibe) => setVibe(newVibe)} />
-          </div>
+          </div> */}
 
           {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
               onClick={(e) => generateBio(e)}
             >
-              Generate your bio &rarr;
+              Generate your leads &rarr;
             </button>
           )}
           {loading && (
