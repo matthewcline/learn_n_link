@@ -8,6 +8,8 @@ import Footer from "../components/Footer";
 import Github from "../components/GitHub";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
+import Lead from "../components/Lead";
+import leads from "../lib/sampleLeads.json";
 
 const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ const Home: NextPage = () => {
   const [experience, setExperience] = useState("");
   const [aspiration, setAspiration] = useState("");
   // const [vibe, setVibe] = useState<VibeType>("Professional");
-  const [generatedLeads, setGeneratedLeads] = useState<String>("");
+  const [generatedLeads, setGeneratedLeads] = useState(leads.leads);
 
   const leadRef = useRef<null | HTMLDivElement>(null);
 
@@ -175,24 +177,10 @@ const Home: NextPage = () => {
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                 {generatedLeads
-                  .substring(generatedLeads.indexOf("1") + 3)
-                  .split("2.")
-                  .map((generatedLead) => {
-                    return (
-                      <div
-                        className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                        onClick={() => {
-                          navigator.clipboard.writeText(generatedLead);
-                          toast("Bio copied to clipboard", {
-                            icon: "✂️",
-                          });
-                        }}
-                        key={generatedLead}
-                      >
-                        <p>{generatedLead}</p>
-                      </div>
-                    );
-                  })}
+                  .map((generatedLead) => (
+                    <Lead lead={generatedLead} />
+                  ))
+                }
               </div>
             </>
           )}
