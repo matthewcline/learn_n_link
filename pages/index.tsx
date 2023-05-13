@@ -18,13 +18,12 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [vibe, setVibe] = useState<VibeType>("Professional");
-  const [generatedBios, setGeneratedBios] = useState<String>("");
   const [questionSet, setQuestionSet] = useState("GenerateLeads");
   const [linkedInLink, setLinkedInLink] = useState("");
   const [JobLink, setJobLink] = useState("");
   const [bioHighlight, setBioHighlight] = useState("");
-  const [connectWith, setConnectWith] = useState("");
-  
+  const [Experience, setExperience]  = useState("");
+  const [generatedLeads, setGeneratedLeads] = useState(leads.leads);
 
   const leadRef = useRef<null | HTMLDivElement>(null);
 
@@ -53,7 +52,7 @@ const Home: NextPage = () => {
     bio.slice(-1) === "." ? "" : "."
   }`;
 
-  const generateLead = async (e: any) => {
+  const generateBios = async (e: any) => {
     e.preventDefault();
     setGeneratedLeads([]);
     setLoading(true);
@@ -159,7 +158,7 @@ const Home: NextPage = () => {
             </p>
           </div>
           <textarea
-            value={experience}
+            value={Experience}
             onChange={(e) => setExperience(e.target.value)}
             rows={4}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
@@ -203,7 +202,7 @@ const Home: NextPage = () => {
             {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt8 hover:bg-black/80 w-full"
-              onClick={(e) => generateBio(e)}
+              onClick={(e) => generateBios(e)}
               >
               Generate your bios →
               </button>
@@ -224,43 +223,30 @@ const Home: NextPage = () => {
         />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
         <div className="space-y-10 my-10">
-          {generatedBios && (
+          {generatedLeads && (
             <>
               <div>
                 <h2
                   className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
-                  ref={bioRef}
+                  ref={leadRef}
                 >
                   Your generated bios
                 </h2>
               </div>
-              <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                {generatedBios
-                  .substring(generatedBios.indexOf("1") + 3)
-                  .split("2.")
-                  .map((generatedBio) => {
-                    return (
-                      <div
-                        className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                        onClick={() => {
-                          navigator.clipboard.writeText(generatedBio);
-                          toast("Bio copied to clipboard", {
-                            icon: "✂️",
-                          });
-                        }}
-                        key={generatedBio}
-                      >
-                        <p>{generatedBio}</p>
-                      </div>
-                    );
-                  })}
+              <div className="space-y-8 flex flex-col items-center justify-center mx-auto">
+                {generatedLeads
+                  .map((generatedLead) => (
+                    <Accordion key={generatedLead.lastName} title={<LeadCard key={generatedLead.lastName} lead={generatedLead} />} content={<Lead key={generatedLead.lastName} lead={generatedLead} />} />
+                  ))
+                }
               </div>
-              </>
-              )}
-              </div>
-              </main>
-              {/* <Footer /> */}
-              </div>
-              );
-              };
+            </>
+          )}
+        </div>
+      </main>
+      {/* <Footer /> */}
+    </div>
+  );
+};
+
 export default Home;
