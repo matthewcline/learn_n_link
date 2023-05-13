@@ -19,6 +19,7 @@ const Home: NextPage = () => {
   const [JobLink, setJobLink] = useState("");
   const [bioHighlight, setBioHighlight] = useState("");
   const [connectWith, setConnectWith] = useState("");
+  
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
@@ -192,68 +193,52 @@ const Home: NextPage = () => {
               "e.g. Engineering managers, recruiters, and developers at companies like Google, Facebook, and Amazon."
             }
             />
+            
             {!loading && (
-              <button
-                className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-                onClick={(e) => generateBio(e)}
+            <button
+              className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt8 hover:bg-black/80 w-full"
+              onClick={(e) => generateBio(e)}
               >
-                Generate your leads →
+              Generate your bios →
               </button>
-            )}
-            {loading && (
+              )}
+              {loading && (
               <button
-                className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
-                disabled
-              >
-                <LoadingDots color="white" style="large" />
+                         className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
+                         disabled
+                       >
+              <LoadingDots color="white" style="large" />
               </button>
-            )}
-            </div>
-            <Toaster
-                  position="top-center"
-                  reverseOrder={false}
-                  toastOptions={{ duration: 2000 }}
-                />
-                <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-                <div className="space-y-10 my-10">
-                  {generatedBios && (
-                    <>
-                      <div>
-                        <h2
-                          className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
-                          ref={bioRef}
-                        >
-                          Your generated bios
-                        </h2>
-                      </div>
-                      <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-                        {generatedBios
-                          .substring(generatedBios.indexOf("1") + 3)
-                          .split("2.")
-                          .map((generatedBio) => {
-                            return (
-                              <div
-                                className="bg-white rounded-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(generatedBio);
-                                  toast("Bio copied to clipboard", {
-                                    icon: "✂️",
-                                  });
-                                }}
-                                key={generatedBio}
-                              >
-                                <p>{generatedBio}</p>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </>
-                  )}
-                </div>
+              )}
+              </div>
+              <Toaster
+              position="top-center"
+              reverseOrder={false}
+              toastOptions={{ duration: 2000 }}
+              />
+              <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
+              <div className="space-y-10 my-10">
+              {generatedBios && (
+              <>
+              <div>
+              <h2
+                             className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
+                             ref={bioRef}
+                           >
+              Your generated bios
+              </h2>
+              </div>
+              <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
+              {generatedBios.split("\n").map((generatedBio, index) => (
+              <div key={index}>{generatedBio}</div>
+              ))}
+              </div>
+              </>
+              )}
+              </div>
               </main>
               {/* <Footer /> */}
-            </div>
-            );
-            };
-
-  export default Home;
+              </div>
+              );
+              };
+export default Home;
