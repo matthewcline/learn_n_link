@@ -46,9 +46,9 @@ const Home: NextPage = () => {
   const prompt = ``;
 
   // URL Validation
-  const isValidURL = (string) => {
+  const isValidURL = (s: string) => {
     try {
-      new URL(string);
+      new URL(s);
       return true;
     } catch (_) {
       return false;
