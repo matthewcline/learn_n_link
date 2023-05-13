@@ -45,8 +45,29 @@ const Home: NextPage = () => {
 
   const prompt = ``;
 
+  // URL Validation
+  const isValidURL = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
   const generateBios = async (e: any) => {
     e.preventDefault();
+    // Check if LinkedIn link is valid
+    if (!isValidURL(linkedInLink)) {
+      toast.error("Please enter a valid LinkedIn URL");
+      return;
+    }
+
+    // Check if Job link is valid (only for the "WriteCover" questionSet)
+    if (questionSet === "WriteCover" && !isValidURL(JobLink)) {
+      toast.error("Please enter a valid job link URL");
+      return;
+    }
     setGeneratedLeads([]);
     setLoading(true);
     const response = await fetch("/api/generate", {
