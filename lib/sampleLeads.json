@@ -12,6 +12,7 @@
       "elt": true,
       "industryUrn": "urn:li:industry:123456",
       "firstName": "John",
+      "imageUrl": "john2.png",
       "entityUrn": "urn:li:person:123456789",
       "geoLocation": {
         "latitude": 40.7128,
@@ -103,6 +104,7 @@
       "elt": true,
       "industryUrn": "urn:li:industry:987654",
       "firstName": "Emily",
+      "imageUrl": "emily2.png",
       "entityUrn": "urn:li:person:987654321",
       "geoLocation": {
         "latitude": 34.0522,
@@ -194,6 +196,7 @@
       "elt": true,
       "industryUrn": "urn:li:industry:654321",
       "firstName": "Michael",
+      "imageUrl": "michael.png",
       "entityUrn": "urn:li:person:654321098",
       "geoLocation": {
         "latitude": 51.5074,

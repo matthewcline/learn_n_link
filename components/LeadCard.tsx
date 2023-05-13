@@ -8,7 +8,7 @@ export default function LeadCard({ lead }: LeadCardProps) {
   const imageUrl = `/${lead.imageUrl}`
   return (
     <div
-      className="bg-white rounded-xl max-w-xl shadow-md p-4 hover:bg-gray-100 transition cursor-copy border"
+      className="bg-white rounded-xl max-w-xl shadow-md p-4 hover:bg-gray-100 transition border"
       onClick={() => {
         // navigator.clipboard.writeText(generatedLead);
         // toast("Bio copied to clipboard", {
