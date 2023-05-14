@@ -55,7 +55,7 @@ const Home: NextPage = () => {
     }
   };
 
-  const generateBios = async (e: any) => {
+  const generateLeads = async (e: any) => {
     e.preventDefault();
     // Check if LinkedIn link is valid
     if (!isValidURL(linkedInLink)) {
@@ -114,7 +114,7 @@ const Home: NextPage = () => {
 
     <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
-        <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
+        <h1 className="sm:text-4xl text-4xl max-w-[708px] font-bold text-slate-900">
           Find the perfect intro to the people and jobs you want to connect with!
         </h1>
         <div className="max-w-xl w-full">
@@ -216,9 +216,9 @@ const Home: NextPage = () => {
             {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt8 hover:bg-black/80 w-full"
-              onClick={(e) => generateBios(e)}
+              onClick={(e) => generateLeads(e)}
               >
-              Generate your bios →
+              Generate your leads →
               </button>
               )}
               {loading && (
@@ -244,7 +244,7 @@ const Home: NextPage = () => {
                   className="sm:text-4xl text-3xl font-bold text-slate-900 mx-auto"
                   ref={leadRef}
                 >
-                  Your generated bios
+                  Your generated leads
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center mx-auto">

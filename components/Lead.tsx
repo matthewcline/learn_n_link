@@ -43,7 +43,7 @@ export default function Lead({ lead }: LeadProps) {
         className="leading-relaxed rounded-xl p-4 text-left hover:bg-gray-100 transition cursor-copy border"
         onClick={() => {
           navigator.clipboard.writeText(intro);
-          toast("Bio copied to clipboard", {
+          toast("Intro copied to clipboard", {
             icon: "✂️",
           });
         }}
