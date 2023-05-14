@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { VibeType } from "../components/DropDown";
 import Footer from "../components/Footer";
@@ -24,6 +24,10 @@ const Home: NextPage = () => {
   const [bioHighlight, setBioHighlight] = useState("");
   const [Experience, setExperience]  = useState("");
   const [generatedLeads, setGeneratedLeads] = useState(leads.leads);
+
+  useEffect(() => {
+    generateIntros();
+  });
 
   const leadRef = useRef<null | HTMLDivElement>(null);
 
@@ -70,15 +74,14 @@ const Home: NextPage = () => {
     }
     setGeneratedLeads([]);
     setLoading(true);
-    const response = await fetch("https://learn-and-link.vercel.app/intro", {
+    const response = await fetch("https://learn-and-link.vercel.app/recommended_profiles", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "candidate_summary": "candidate summary",
-        "lead_summary": "lead summary",
-        "aspiration": bioHighlight,
+        "user_linkedin_profile_url": linkedInLink,
+        "user_free_form_text": bioHighlight,
       }),
     });
 
@@ -92,20 +95,27 @@ const Home: NextPage = () => {
       return;
     }
 
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    // while (!done) {
-    //   const { value, done: doneReading } = await reader.read();
-    //   done = doneReading;
-    //   const chunkValue = decoder.decode(value);
-    //   setGeneratedLeads((prev) => prev + chunkValue);
-    // }
     setGeneratedLeads(leads.leads);
     scrollToLeads();
     setLoading(false);
   };
+
+  const generateIntros = async () => {
+    if (!generatedLeads) {
+      return;
+    }
+    const response = await fetch("https://learn-and-link.vercel.app/intro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "user_linkedin_profile_url": linkedInLink,
+        "lead_linkedin_profile_url": "lead summary",
+        "user_free_form_text": bioHighlight,
+      }),
+    });
+  }
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
