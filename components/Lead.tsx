@@ -9,12 +9,12 @@ interface LeadProps {
 export default function Lead({ lead }: LeadProps) {
   const [query, setQuery] = useState("");
 
-  const initialIntro = `Hi [Contact's Name],
+  const initialIntro = `Hi John,
 
-    I noticed your expertise in [specific field/industry] on LinkedIn and wanted to connect. As an [Your Position/Role] with a passion for [shared interest/industry], I believe there could be valuable synergies between us. Let's connect and explore potential collaboration opportunities!
+    I noticed your expertise in software engineering on LinkedIn and wanted to connect. As a data scientist with a passion for full-stack software engineering, I believe there could be valuable synergies between us. Let's connect and explore potential collaboration opportunities!
 
     Best regards,
-    [Your Name]`;
+    Matt`;
   
   const [intro, setIntro] = useState(initialIntro);
 
