@@ -1,5 +1,5 @@
 import EmojiCard from "./EmojiCard";
-import { useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
 interface LeadProps {
@@ -17,6 +17,12 @@ export default function Lead({ lead }: LeadProps) {
     [Your Name]`;
   
   const [intro, setIntro] = useState(initialIntro);
+
+  useEffect(() => {
+    if (lead.intro) {
+      setIntro(lead.intro)
+    }
+  }, [lead]);
 
   return (
     <div

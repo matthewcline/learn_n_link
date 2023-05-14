@@ -24,10 +24,8 @@ const Home: NextPage = () => {
   const [bioHighlight, setBioHighlight] = useState("");
   const [Experience, setExperience]  = useState("");
   const [generatedLeads, setGeneratedLeads] = useState(leads.leads);
-
-  useEffect(() => {
-    generateIntros();
-  });
+  const [intros, setIntros] = useState([]);
+  const backend_url = "https://a6db-108-30-103-98.ngrok-free.app";
 
   const leadRef = useRef<null | HTMLDivElement>(null);
 
@@ -72,9 +70,10 @@ const Home: NextPage = () => {
       toast.error("Please enter a valid job link URL");
       return;
     }
+    
     setGeneratedLeads([]);
     setLoading(true);
-    const response = await fetch("https://learn-and-link.vercel.app/recommended_profiles", {
+    const response = await fetch(`${backend_url}/recommended_profiles`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,24 +97,44 @@ const Home: NextPage = () => {
     setGeneratedLeads(leads.leads);
     scrollToLeads();
     setLoading(false);
-  };
+    setTimeout(() => {
+      generateIntros();
+    }, 2000);
+}
 
   const generateIntros = async () => {
     if (!generatedLeads) {
       return;
     }
-    const response = await fetch("https://learn-and-link.vercel.app/intro", {
+
+    let newIntros : string[] = [];
+    // for (const lead of generatedLeads) {
+    let generatedLeadLink = generatedLeads[0].linkedInLink;
+    const response = await fetch(`${backend_url}/intro`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         "user_linkedin_profile_url": linkedInLink,
-        "lead_linkedin_profile_url": "lead summary",
+        "lead_linkedin_profile_url": generatedLeadLink,
         "user_free_form_text": bioHighlight,
       }),
     });
+    let text = await response.text();
+    newIntros.push(text);
+    // }
+    setIntros(newIntros);
   }
+
+  let generatedLeadsWithIntros = JSON.parse(JSON.stringify(generatedLeads));
+  generatedLeadsWithIntros.forEach((lead: any, index: number) => {
+    if (index < intros.length) {
+      lead.intro = intros[index];
+    } else {
+      lead.intro = "";
+    }
+  });
 
   return (
     <div className="flex max-w-5xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
@@ -260,9 +279,9 @@ const Home: NextPage = () => {
                 </h2>
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center mx-auto">
-                {generatedLeads
-                  .map((generatedLead) => (
-                    <Accordion key={generatedLead.lastName} title={<LeadCard key={generatedLead.lastName} lead={generatedLead} />} content={<Lead key={generatedLead.lastName} lead={generatedLead} />} />
+                {generatedLeadsWithIntros
+                  .map((generatedLead: any) => (
+                    <Accordion key={generatedLead.lastName} title={<LeadCard key={generatedLead.lastName} lead={generatedLead} />} content={<Lead key={generatedLead.lastName} lead={generatedLead}/>} />
                   ))
                 }
               </div>
