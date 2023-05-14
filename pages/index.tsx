@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
   const questionSet1 = {
     bioQuestion: "What experience do you want to highlight?",
-    connectQuestion: "Who are you looking to connect with!",
+    connectQuestion: "Who are you looking to connect with?",
   };
 
   const questionSet2 = {
@@ -70,13 +70,15 @@ const Home: NextPage = () => {
     }
     setGeneratedLeads([]);
     setLoading(true);
-    const response = await fetch("/api/generate", {
+    const response = await fetch("https://learn-and-link.vercel.app/intro", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt,
+        "candidate_summary": "candidate summary",
+        "lead_summary": "lead summary",
+        "aspiration": bioHighlight,
       }),
     });
 
