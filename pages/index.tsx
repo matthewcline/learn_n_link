@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   const [bioHighlight, setBioHighlight] = useState("");
   const [Experience, setExperience]  = useState("");
   const [generatedLeads, setGeneratedLeads] = useState(leads.leads);
-  const [intros, setIntros] = useState([]);
+  const [intros, setIntros] = useState([""]);
   const backend_url = "https://a6db-108-30-103-98.ngrok-free.app";
 
   const leadRef = useRef<null | HTMLDivElement>(null);
